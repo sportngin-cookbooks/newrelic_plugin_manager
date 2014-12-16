@@ -20,11 +20,10 @@ provisioner:
       install_path: '/opt/newrelic'
       user: 
         name: 'root'
-        group:
       plugins:
         example:
           download_url: 'https://github.com/newrelic-platform/newrelic_example_plugin/archive/release/1.0.1.tar.gz'
-          plugin_path: <%= "/opt/newrelic/newrelic_example_plugin" %>
+          plugin_path: "/opt/newrelic/newrelic_example_plugin"
           plugin_version: '1.0.1'
           config:
             hertz: 1000
@@ -38,7 +37,7 @@ platforms:
     driver_config:
       ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
       username: ec2-user
-      image_id: ami-0e289766
+      image_id: ami-d00360b8
       region: us-east-1
       availability_zone: us-east-1b
       security_group_ids: ['ci-testing']
