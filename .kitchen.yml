@@ -17,16 +17,20 @@ provisioner:
     test_kitchen: true
     newrelic:
       license_key: ''
-      install_path: '/opt/newrelic/'
+      install_path: '/opt/newrelic'
       user: 
-        name: 'ec2_user'
+        name: 'root'
+        group:
       plugins:
         example:
           download_url: 'https://github.com/newrelic-platform/newrelic_example_plugin/archive/release/1.0.1.tar.gz'
-          plugin_path: "#{node[:newrelic][:install_path]}/newrelic_example_plugin"
+          plugin_path: <%= "/opt/newrelic/newrelic_example_plugin" %>
           plugin_version: '1.0.1'
           config:
             hertz: 1000
+            space: 
+              left: 'yes'
+              right: 'now'
 
 platforms:
   - name: amazon-2014.10
