@@ -15,6 +15,18 @@ provisioner:
   name: chef_solo
   attributes:
     test_kitchen: true
+    newrelic:
+      license_key: ''
+      install_path: '/opt/newrelic/'
+      user: 
+        name: 'ec2_user'
+      plugins:
+        example:
+          download_url: 'https://github.com/newrelic-platform/newrelic_example_plugin/archive/release/1.0.1.tar.gz'
+          plugin_path: "#{node[:newrelic][:install_path]}/newrelic_example_plugin"
+          plugin_version: '1.0.1'
+          config:
+            hertz: 1000
 
 platforms:
   - name: amazon-2014.10
@@ -28,10 +40,11 @@ platforms:
       security_group_ids: ['ci-testing']
       interface: public
       tags:
-        Name: <%= "##{ENV['CI'] ? 'travis-ci' : ENV['USER']}-ebs_backups-kitchen" %>
+        Name: <%= "#{ENV['CI'] ? 'travis-ci' : ENV['USER']}-newrelic-plugin-manager-kitchen" %>
         Env: public
 
 suites:
   - name: default
     run_list:
+      - recipe[newrelic_plugin_manager::default]
     attributes:
