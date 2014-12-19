@@ -37,7 +37,7 @@ platforms:
     driver_config:
       ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
       username: ec2-user
-      image_id: ami-d00360b8
+      image_id: ami-246ed34c
       region: us-east-1
       availability_zone: us-east-1b
       security_group_ids: ['ci-testing']

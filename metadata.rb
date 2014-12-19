@@ -6,6 +6,8 @@ description      'Installs/Configures newrelic_plugin_manager'
 long_description 'Installs/Configures newrelic_plugin_manager'
 version          '0.1.0'
 
+depends 'build-essential'
+
 supports 'amazon'
 
 recipe 'default', 'Installs any plugin as described in attributes'

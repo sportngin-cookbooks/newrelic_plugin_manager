@@ -1,3 +1,5 @@
+include_recipe 'build-essential::default'
+
 node[:newrelic][:plugins].each do |plugin_name, attributes|
     newrelic_plugin_manager_plugin_agent plugin_name do
     license_key       node[:newrelic][:license_key]
