@@ -1,6 +1,5 @@
 define :plugin_service do
   # create init.d script
-  puts params.inspect
   template "/etc/init.d/#{params[:name]}" do
     source 'service.erb'
     variables({

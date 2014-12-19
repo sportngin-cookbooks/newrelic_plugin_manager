@@ -27,10 +27,10 @@ provisioner:
           plugin_path: "/opt/newrelic/newrelic_example_plugin"
           plugin_version: '1.0.1'
           config:
-            hertz: 1000
-            space: 
-              left: 'yes'
-              right: 'now'
+            - hertz: 1000
+              space:
+                left: 'yes'
+                right: 'now'
 
 platforms:
   - name: amazon-2014.10
