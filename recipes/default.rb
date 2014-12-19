@@ -26,5 +26,6 @@ node[:newrelic][:plugins].each do |plugin_name, attributes|
     plugin_version    attributes[:plugin_version]
     download_url      attributes[:download_url]
     config            attributes[:config]
+    plugin_type       attributes[:plugin_type]
   end
 end

@@ -26,11 +26,23 @@ provisioner:
           download_url: 'https://github.com/newrelic-platform/newrelic_example_plugin/archive/release/1.0.1.tar.gz'
           plugin_path: "/opt/newrelic/newrelic_example_plugin"
           plugin_version: '1.0.1'
+          plugin_type: 'ruby'
           config:
             - hertz: 1000
               space:
                 left: 'yes'
                 right: 'now'
+        wikipedia_java:
+          download_url: 'https://github.com/newrelic-platform/newrelic_java_wikipedia_plugin/raw/master/dist/newrelic_wikipedia_plugin-2.0.0.tar.gz'
+          plugin_path: "/opt/newrelic/newrelic_wikipedia_java_plugin"
+          plugin_version: "2.0.0"
+          plugin_type: 'java'
+          options: '-Xmx128m'
+          config:
+            - name: "Wikipedia - English"
+              host: "en.wikipedia.org"
+            - name: "Wikipedia - French"
+              host: "fr.wikipedia.org"
 
 platforms:
   - name: amazon-2014.10

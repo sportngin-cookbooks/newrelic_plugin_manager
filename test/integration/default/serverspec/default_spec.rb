@@ -12,3 +12,7 @@ end
 describe command('sudo /etc/init.d/newrelic-example-plugin status') do
   its(:stdout) { should match /running/ }
 end
+
+describe command('sudo /etc/init.d/newrelic-wikipedia-java-plugin status') do
+  its(:stdout) { should match /running/ }
+end
