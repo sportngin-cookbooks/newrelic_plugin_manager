@@ -13,6 +13,7 @@ def install_agent
     plugin_version   current_resource.plugin_version
     download_url     current_resource.download_url 
     user             current_resource.user
+    group            current_resource.group
   end
 
   # newrelic template
@@ -20,9 +21,15 @@ def install_agent
     source 'newrelic_plugin.yml.erb'
     action :create
     owner current_resource.user
+    group current_resource.group
     variables ({
       :license_key => current_resource.license_key,
-      :config => {"agent" => {"#{current_resource.plugin_name}" => JSON.parse(current_resource.config.to_json) } }.to_yaml
+      :config => {
+        "agents" => {
+          "#{current_resource.plugin_name}" => 
+            JSON.parse(current_resource.config.to_json) 
+          } 
+        }.to_yaml.gsub("---\n", '')
       })
     notifies :restart, "service[newrelic-#{current_resource.plugin_name}-plugin]"
   end
@@ -31,6 +38,7 @@ def install_agent
   bundle_install do
     path current_resource.plugin_path
     user current_resource.user
+    group current_resource.group
   end
 end
 
@@ -39,12 +47,13 @@ def start_agent
   
   # install init.d script and start service
   plugin_service "newrelic-#{current_resource.plugin_name}-plugin" do
-    daemon          "./newrelic_#{current_resource.plugin_name}_agent"
+    daemon          "#{current_resource.plugin_path}/newrelic_#{current_resource.plugin_name}_agent"
     daemon_dir      current_resource.plugin_path
     plugin_name     current_resource.plugin_name
     plugin_version  current_resource.plugin_version
     user            current_resource.user
-    run_command     'bundle exec'
+    group           current_resource.group
+    run_command     '/usr/local/bin/bundle exec'
   end
 end
 

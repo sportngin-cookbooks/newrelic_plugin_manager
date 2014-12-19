@@ -5,6 +5,7 @@ define :install_plugin do
   # create install path
   directory params[:install_path] do
     owner params[:user]
+    group params[:group]
     action :create
     recursive true
   end
@@ -14,6 +15,7 @@ define :install_plugin do
     source params[:download_url]
     action :create_if_missing
     owner params[:user]
+    group params[:group]
     notifies :delete, "directory[#{params[:plugin_path]}]", :immediately
     notifies :create, "directory[#{params[:plugin_path]}]", :immediately
     notifies :run, "bash[extract #{params[:name]} resource]", :immediately
@@ -24,6 +26,7 @@ define :install_plugin do
     action :create
     recursive true
     owner params[:user]
+    group params[:group]
   end
 
   # extract plugin tar file to params[:plugin_path]
@@ -34,6 +37,7 @@ define :install_plugin do
       tar zxvf #{tar_file} --strip-components=1
     EOH
     user params[:user]
+    group params[:group]
     # directory is empty if it has 2 entries (implicit . and .. entries)
     only_if { File.directory?(params[:plugin_path]) && Dir.entries(params[:plugin_path]).sort == %w(. ..) }
   end
