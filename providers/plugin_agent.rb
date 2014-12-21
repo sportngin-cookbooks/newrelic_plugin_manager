@@ -106,9 +106,7 @@ def install_java_agent
     mode "0400"
     variables ({
       :license_key => current_resource.license_key,
-      :config => JSON.parse({
-        "agents" => JSON.parse(current_resource.config.to_json) 
-      }.to_json)
+      :config => {"agents" => current_resource.config}.to_json
     })
     notifies :restart, "service[newrelic-#{current_resource.plugin_name.gsub("_","-")}-plugin]"
   end
@@ -139,6 +137,6 @@ action :install do
   install_client
 end
 
-action :configure do
+action :start do
   start_agent
 end

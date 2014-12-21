@@ -1,10 +1,10 @@
 gem_package 'newrelic_plugin' do
-  version '1.3.1'
+  version node[:newrelic][:newrelic_plugin][:version]
 end
 
-ruby_block "add /usr/local/bin to /etc/profile" do
+ruby_block "add /usr/local/bin to ~/.bashrc" do
   block do
-    file = Chef::Util::FileEdit.new("/etc/profile")
+    file = Chef::Util::FileEdit.new("/home/#{node[:newrelic][:user][:name]}/.bashrc")
     file.insert_line_if_no_match("\/usr\/local\/bin", "export PATH=/usr/local/bin:$PATH")
     file.write_file
   end
@@ -24,8 +24,8 @@ node[:newrelic][:plugins].each do |plugin_name, attributes|
     license_key       node[:newrelic][:license_key]
     plugin_path       attributes[:plugin_path]
     plugin_version    attributes[:plugin_version]
+    plugin_type       attributes[:plugin_type]
     download_url      attributes[:download_url]
     config            attributes[:config]
-    plugin_type       attributes[:plugin_type]
   end
 end
