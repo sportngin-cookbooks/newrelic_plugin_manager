@@ -18,7 +18,7 @@ file "/home/#{node[:newrelic][:user][:name]}/.bashrc" do
   owner node[:newrelic][:user][:name]
   group node[:newrelic][:user][:group]
   mode 0644
-  action :create
+  action :create_if_missing
 end
 
 ruby_block "add /usr/local/bin to /home/#{node[:newrelic][:user][:name]}/.bashrc" do
