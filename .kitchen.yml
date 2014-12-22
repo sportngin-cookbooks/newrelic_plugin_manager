@@ -19,8 +19,8 @@ provisioner:
       license_key: ''
       install_path: '/opt/newrelic'
       user: 
-        name: 'ec2-user'
-        group: 'ec2-user'
+        name: 'deploy'
+        group: 'deploy'
       plugins:
         example:
           download_url: 'https://github.com/newrelic-platform/newrelic_example_plugin/archive/release/1.0.1.tar.gz'

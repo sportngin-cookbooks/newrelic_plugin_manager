@@ -127,14 +127,8 @@ def start_java_agent
   end
 end
 
-
-action :install_and_start do
-  install_agent
-  start_agent
-end
-
 action :install do
-  install_client
+  install_agent
 end
 
 action :start do

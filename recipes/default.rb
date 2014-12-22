@@ -1,13 +1,7 @@
+yum_package 'gcc'
+yum_package 'ruby-devel'
 gem_package 'newrelic_plugin' do
   version node[:newrelic][:newrelic_plugin][:version]
-end
-
-ruby_block "add /usr/local/bin to ~/.bashrc" do
-  block do
-    file = Chef::Util::FileEdit.new("/home/#{node[:newrelic][:user][:name]}/.bashrc")
-    file.insert_line_if_no_match("\/usr\/local\/bin", "export PATH=/usr/local/bin:$PATH")
-    file.write_file
-  end
 end
 
 group node[:newrelic][:user][:group] do
@@ -17,6 +11,22 @@ end
 user node[:newrelic][:user][:name] do
   gid node[:newrelic][:user][:group]
   action :create
+end
+
+file "/home/#{node[:newrelic][:user][:name]}/.bashrc" do
+  content "export PATH=/usr/local/bin:$PATH"
+  owner node[:newrelic][:user][:name]
+  group node[:newrelic][:user][:group]
+  mode 0644
+  action :create
+end
+
+ruby_block "add /usr/local/bin to /home/#{node[:newrelic][:user][:name]}/.bashrc" do
+  block do
+    file = Chef::Util::FileEdit.new("/home/#{node[:newrelic][:user][:name]}/.bashrc")
+    file.insert_line_if_no_match("\/usr\/local\/bin", "export PATH=/usr/local/bin:$PATH")
+    file.write_file
+  end
 end
 
 node[:newrelic][:plugins].each do |plugin_name, attributes|

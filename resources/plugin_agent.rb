@@ -1,5 +1,5 @@
-actions        :install_and_start, :install, :start
-default_action :install_and_start
+actions        :install, :start
+default_action [:install, :start]
 
 attribute :plugin_name,       :kind_of => String, :name_attribute => true
 attribute :plugin_version,    :kind_of => String, :required => true
