@@ -9,7 +9,7 @@ describe user('deploy') do
   it { should belong_to_group 'deploy' }
 end
 
-describe command('sudo /etc/init.d/newrelic-example-plugin status') do
+describe command('sudo /etc/init.d/newrelic-wikipedia-plugin status') do
   its(:stdout) { should match /running/ }
 end
 

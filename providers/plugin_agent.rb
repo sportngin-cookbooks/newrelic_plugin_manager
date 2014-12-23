@@ -1,4 +1,5 @@
 require 'json'
+require 'yaml'
 
 def install_agent
   current_resource = new_resource
@@ -35,13 +36,15 @@ def install_ruby_agent
     owner current_resource.user
     group current_resource.group
     variables ({
-      :license_key => current_resource.license_key,
       :config => {
+        "newrelic" => {
+          "license_key" => current_resource.license_key
+          },
         "agents" => {
           "#{current_resource.plugin_name}" => 
             JSON.parse(current_resource.config.to_json) 
-          } 
-        }.to_yaml.gsub("---\n", '')
+          }
+        }.to_yaml
       })
     notifies :restart, "service[newrelic-#{current_resource.plugin_name.gsub("_","-")}-plugin]"
   end
