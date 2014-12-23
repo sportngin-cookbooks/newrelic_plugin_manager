@@ -68,7 +68,7 @@ def start_ruby_agent
     plugin_version  current_resource.plugin_version
     user            current_resource.user
     group           current_resource.group
-    run_command     'bundle exec'
+    run_command     '/usr/local/bin/bundle exec'
   end
 end
 
