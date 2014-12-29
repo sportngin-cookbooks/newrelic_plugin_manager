@@ -16,6 +16,7 @@ end
 def install_ruby_agent
   current_resource = new_resource
   # verify ruby dependency
+  verify_user current_resource.user
   verify_ruby "#{current_resource.plugin_name.split("_").map(&:capitalize).join(" ")} Plugin"
 
   verify_license_key current_resource.license_key
@@ -76,7 +77,7 @@ def install_java_agent
   current_resource = new_resource
   # verify ruby dependency
   verify_java "#{current_resource.plugin_name.split("_").map(&:capitalize).join(" ")} - Java Plugin"
-
+  verify_user current_resource.user
   verify_license_key current_resource.license_key
 
   install_plugin "newrelic_#{current_resource.plugin_name}_plugin" do

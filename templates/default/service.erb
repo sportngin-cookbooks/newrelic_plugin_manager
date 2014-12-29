@@ -16,6 +16,7 @@ VERSION=<%= @version %>
 DAEMON=<%= @daemon %>
 DAEMONDIR=<%= @daemon_dir %>
 PIDFILE=/var/run/$NAME.pid
+PATH=/usr/local/bin:$PATH
 
 get_pid() {
   cat "$PIDFILE"
