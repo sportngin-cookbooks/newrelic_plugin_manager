@@ -1,5 +1,5 @@
-yum_package 'gcc'
-yum_package 'ruby-devel'
+# yum_package 'gcc'
+# yum_package 'ruby-devel'
 gem_package 'newrelic_plugin' do
   version node[:newrelic][:newrelic_plugin][:version]
 end
@@ -26,6 +26,19 @@ ruby_block "add /usr/local/bin to /home/#{node[:newrelic][:user][:name]}/.bashrc
     file = Chef::Util::FileEdit.new("/home/#{node[:newrelic][:user][:name]}/.bashrc")
     file.insert_line_if_no_match("\/usr\/local\/bin", "export PATH=/usr/local/bin:$PATH")
     file.write_file
+  end
+end
+
+ruby_block "testing things" do
+  block do
+    Chef::Log.info "WHOAMI"
+    Chef::Log.info `whoami`
+    Chef::Log.info "GEM_HOME"
+    Chef::Log.info `$GEM_HOME`
+    Chef::Log.info "GEM_PATH"
+    Chef::Log.info `$GEM_PATH`
+    Chef::Log.info "PATH"
+    Chef::Log.info `$PATH`
   end
 end
 
