@@ -2,12 +2,13 @@ gem_package 'newrelic_plugin' do
   version node[:newrelic][:newrelic_plugin][:version]
 end
 
-group node[:newrelic][:user][:group] do
+user node[:newrelic][:user][:name] do
   action :create
 end
 
-user node[:newrelic][:user][:name] do
-  gid node[:newrelic][:user][:group]
+group node[:newrelic][:user][:group] do
+  append true
+  members node[:newrelic][:user][:name]
   action :create
 end
 
