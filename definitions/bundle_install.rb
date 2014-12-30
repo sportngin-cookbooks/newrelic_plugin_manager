@@ -2,6 +2,7 @@ define :bundle_install do
   # install bundler gem
   gem_package 'bundler' do
     options '--no-ri --no-rdoc'
+    action :upgrade
   end
 
   # bundle install
