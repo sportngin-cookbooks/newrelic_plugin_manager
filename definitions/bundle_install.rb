@@ -8,7 +8,7 @@ define :bundle_install do
   # bundle install
   execute 'bundle install' do
     cwd params[:path]
-    command "/usr/local/bin/bundle install --path #{params[:path]}/.vendor/bundle"
+    command "bundle install --path #{params[:path]}/.vendor/bundle"
     user params[:user]
     group params[:group]
     only_if { File.directory?(params[:path]) }
