@@ -2,16 +2,6 @@ gem_package 'newrelic_plugin' do
   version node[:newrelic][:newrelic_plugin][:version]
 end
 
-user node[:newrelic][:user][:name] do
-  action :create
-end
-
-group node[:newrelic][:user][:group] do
-  append true
-  members node[:newrelic][:user][:name]
-  action :create
-end
-
 node[:newrelic][:plugins].each do |plugin_name, attributes|
     newrelic_plugin_manager_plugin_agent plugin_name do
     license_key       node[:newrelic][:license_key]

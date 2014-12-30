@@ -63,5 +63,6 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[newrelic_plugin_manager::user]
       - recipe[newrelic_plugin_manager::default]
     attributes:
