@@ -1,15 +1,68 @@
----
+<% if fog_file = File.expand_path('~/.fog') and File.exists?(fog_file)
+  fog_file = YAML.load_file(fog_file)
+  ENV['AWS_ACCESS_KEY_ID'] ||= fog_file.fetch('travis-ci', {})['aws_access_key_id']
+  ENV['AWS_SECRET_ACCESS_KEY'] ||= fog_file.fetch('travis-ci', {})['aws_secret_access_key']
+  ENV['AWS_KEYPAIR_NAME'] ||= fog_file.fetch('travis-ci', {})['aws_keypair_name']
+  ENV['EC2_SSH_KEY_PATH'] ||= File.expand_path('~/.ssh/id_rsa_kitchen_ec2')
+end %>
 driver:
-  name: vagrant
+  aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+  aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  require_chef_omnibus: "11.4.4"
 
 provisioner:
   name: chef_solo
+  attributes:
+    test_kitchen: true
+    newrelic:
+      license_key: ''
+      install_path: '/opt/newrelic'
+      user: 
+        name: 'deploy'
+        group: 'deploy'
+      plugins:
+        wikipedia:
+          download_url:  "https://github.com/newrelic-platform/newrelic_wikipedia_plugin/archive/1.0.3.tar.gz"
+          plugin_path: "/opt/newrelic/newrelic_wikipedia_plugin"
+          plugin_version: "1.0.3"
+          plugin_type: 'ruby'
+          config:
+            - name: "Wikipedia - English"
+              host: "en.wikipedia.org"
+            - name: "Wikipedia - French"
+              host: "fr.wikipedia.org"
+        wikipedia_java:
+          download_url: 'https://github.com/newrelic-platform/newrelic_java_wikipedia_plugin/raw/master/dist/newrelic_wikipedia_plugin-2.0.0.tar.gz'
+          plugin_path: "/opt/newrelic/newrelic_wikipedia_java_plugin"
+          plugin_version: "2.0.0"
+          plugin_type: 'java'
+          options: '-Xmx128m'
+          config:
+            - name: "Wikipedia - English"
+              host: "en.wikipedia.org"
+            - name: "Wikipedia - French"
+              host: "fr.wikipedia.org"
 
 platforms:
-  - name: ubuntu-12.04
-  - name: centos-6.4
+  - name: amazon-2014.10
+    driver_plugin: ec2
+    driver_config:
+      ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+      username: ec2-user
+      flavor_id: c3.large
+      image_id: ami-aaa7cfc2
+      region: us-east-1
+      availability_zone: us-east-1b
+      security_group_ids: ['ci-testing']
+      interface: public
+      tags:
+        Name: <%= "#{ENV['CI'] ? 'travis-ci' : ENV['USER']}-newrelic-plugin-manager-kitchen" %>
+        Env: public
 
 suites:
   - name: default
     run_list:
+      - recipe[newrelic_plugin_manager::user]
+      - recipe[newrelic_plugin_manager::default]
     attributes:

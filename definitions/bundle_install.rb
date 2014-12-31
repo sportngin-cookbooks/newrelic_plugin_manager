@@ -1,0 +1,16 @@
+define :bundle_install do
+  # install bundler gem
+  gem_package 'bundler' do
+    options '--no-ri --no-rdoc'
+    action :upgrade
+  end
+
+  # bundle install
+  execute 'bundle install' do
+    cwd params[:path]
+    command "bundle install --path #{params[:path]}/.vendor/bundle"
+    user params[:user]
+    group params[:group]
+    only_if { File.directory?(params[:path]) }
+  end
+end

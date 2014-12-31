@@ -1,18 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf'
+group :development do
+  gem 'chef', '~>11.10.4'
+end
 
-# Uncomment these lines if you want to live on the Edge:
-#
-# group :development do
-#   gem "berkshelf", github: "berkshelf/berkshelf"
-#   gem "vagrant", github: "mitchellh/vagrant", tag: "v1.6.3"
-# end
-#
-# group :plugins do
-#   gem "vagrant-berkshelf", github: "berkshelf/vagrant-berkshelf"
-#   gem "vagrant-omnibus", github: "schisamo/vagrant-omnibus"
-# end
-
+gem 'fog', '~>1.24.0'
+gem 'fog-core', '~>1.24.0'
+gem 'berkshelf', '~>2'
 gem 'test-kitchen'
-gem 'kitchen-vagrant'
+gem 'serverspec'
+gem 'kitchen-ec2'
+gem 'httparty'
