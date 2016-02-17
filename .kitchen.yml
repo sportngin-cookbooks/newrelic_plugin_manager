@@ -13,9 +13,9 @@ provisioner:
   attributes:
     test_kitchen: true
     newrelic:
-      license_key: ''
+      license_key: '12345abcdf12345abcdf12345abcdf12345abcdf'
       install_path: '/opt/newrelic'
-      user: 
+      user:
         name: 'deploy'
         group: 'deploy'
       plugins:
@@ -61,6 +61,7 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[newrelic_plugin_manager::_test_setup]
       - recipe[newrelic_plugin_manager::user]
       - recipe[newrelic_plugin_manager::default]
     attributes:
