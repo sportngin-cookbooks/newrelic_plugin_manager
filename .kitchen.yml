@@ -4,6 +4,7 @@
   ENV['AWS_SECRET_ACCESS_KEY'] ||= fog_file.fetch('travis-ci', {})['aws_secret_access_key']
   ENV['AWS_SSH_KEY_ID'] ||= fog_file.fetch('travis-ci', {})['aws_keypair_name']
   ENV['EC2_SSH_KEY_PATH'] ||= File.expand_path('~/.ssh/id_rsa_kitchen_ec2')
+  ENV['AWS_PROFILE'] ||= 'travis-ci'
 end %>
 driver:
   require_chef_omnibus: "11.10.4"
