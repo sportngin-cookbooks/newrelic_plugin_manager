@@ -1,2 +1,2 @@
 deploy_branch: master
-github_repo: sportngin/newrelic_plugins_chef
+github_repo: sportngin-cookbooks/newrelic_plugin_manager
