@@ -10,8 +10,7 @@ describe user('deploy') do
 end
 
 describe command('sudo /etc/init.d/newrelic-wikipedia-plugin status') do
-  # its(:stdout) { should match /running/ }
-  its(:stdout) { should match /stopped/ } #TODO fix bundler and gem dependency issues.
+  its(:stdout) { should match /running/ }
 end
 
 describe command('sudo /etc/init.d/newrelic-wikipedia-java-plugin status') do
