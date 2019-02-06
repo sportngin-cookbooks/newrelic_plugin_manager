@@ -1,5 +1,4 @@
 define :bundle_install do
-  gem_package 'io-console' # Undeclared dependency of Bundler  1.9.1+
   gem_package 'bundler' do
     version '1.17.3'
   end
