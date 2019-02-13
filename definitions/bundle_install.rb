@@ -1,6 +1,7 @@
 define :bundle_install do
   gem_package 'bundler' do
     version '1.17.3'
+    not_if 'gem which bundler'
   end
 
   # bundle install
