@@ -3,6 +3,10 @@ define :bundle_install do
     version '1.17.3'
     not_if 'gem which bundler'
   end
+  
+  gem_package 'json' do
+    version '2.2.0'
+  end
 
   # bundle install
   execute 'bundle install' do
