@@ -1,3 +1,7 @@
+gem_package 'io-console' do
+  version '~> 0.4.0'
+end
+
 gem_package 'newrelic_plugin' do
   version node[:newrelic][:newrelic_plugin][:version]
 end
