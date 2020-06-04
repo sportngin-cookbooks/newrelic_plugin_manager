@@ -210,7 +210,6 @@ DEPENDENCIES
   berkshelf
   chef (~> 11.10.4)
   httparty
-  json
   kitchen-ec2
   serverspec
   test-kitchen
